@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Vila Duparchy — modelo 3D</title>
+  <link rel="stylesheet" href="estilo.css">
+  <script type="importmap">
+    {"imports": {"three": "./vendor/three/build/three.module.js", "three/addons/": "./vendor/three/examples/jsm/"}}
+  </script>
+</head>
+<body>
+  <div id="palco"></div>
+  <header class="titulo">
+    <h1>Vila Duparchy</h1>
+    <p id="subtitulo">Hoje · estado atual</p>
+  </header>
+  <div class="direita">
+    <div class="ferramentas">
+      <button id="abrir-apresentacao" type="button" class="ferramenta" aria-haspopup="dialog" aria-controls="apresentacao" aria-expanded="false" hidden><span class="longo" data-t="propriedade">A propriedade</span><span class="curto" data-t="propriedade-curto">Propriedade</span></button>
+      <button id="abrir-camadas" type="button" class="ferramenta" aria-expanded="false" aria-controls="camadas" data-t="condicionantes" hidden>Condicionantes</button>
+      <button id="abrir-info" type="button" class="ferramenta redonda" aria-haspopup="dialog" aria-controls="info" aria-expanded="false" data-t-aria="aria-info" aria-label="Fontes, pressupostos e o que está por confirmar" hidden>i</button>
+      <button id="antes-depois" type="button" class="ferramenta" aria-pressed="false" hidden>Antes / depois</button>
+      <button id="voo" type="button" class="ferramenta" aria-pressed="false" hidden>Voo guiado</button>
+      <button id="lingua" type="button" class="ferramenta lingua" hidden>EN</button>
+    </div>
+    <section id="contadores" class="contadores" aria-label="Números da fase escolhida" data-t-aria="contas-aria" hidden>
+      <button id="contadores-botao" type="button" class="contadores-botao" aria-expanded="true" aria-controls="contadores-corpo"></button>
+      <div id="contadores-corpo" class="contadores-corpo"></div>
+    </section>
+  </div>
+  <section id="camadas" class="painel camadas" role="dialog" aria-labelledby="camadas-titulo" hidden>
+    <header class="painel-topo"><h2 id="camadas-titulo" data-t="camadas-titulo">Condicionantes do PDM</h2>
+      <button type="button" class="fechar" data-fechar="camadas" aria-label="Fechar" data-t-aria="fechar">×</button></header>
+    <p class="painel-ajuda" data-t="camadas-ajuda">Área de cada uma dentro do muro da propriedade.</p>
+    <ul id="camadas-lista" class="camadas-lista"></ul>
+  </section>
+  <div id="cortina" class="cortina" hidden></div>
+  <section id="info" class="painel info" role="dialog" aria-modal="true" aria-labelledby="info-titulo" hidden>
+    <header class="painel-topo"><h2 id="info-titulo" data-t="info-titulo">Fontes, pressupostos e o que falta confirmar</h2>
+      <button type="button" class="fechar" data-fechar="info" aria-label="Fechar" data-t-aria="fechar">×</button></header>
+    <div id="info-corpo" class="info-corpo"></div>
+  </section>
+  <section id="apresentacao" class="painel info apresentacao" role="dialog" aria-modal="true" aria-labelledby="apresentacao-titulo" hidden>
+    <header class="painel-topo"><h2 id="apresentacao-titulo"></h2>
+      <button type="button" class="fechar" data-fechar="apresentacao" aria-label="Fechar" data-t-aria="fechar">×</button></header>
+    <div id="apresentacao-corpo" class="apr-corpo"></div>
+  </section>
+  <p id="estado" class="estado" data-t="a-carregar">A carregar o modelo…</p>
+  <footer class="rodape">
+    <p id="voo-legenda" class="voo-legenda" role="status" hidden></p>
+    <p id="recusa" class="recusa" hidden></p>
+    <div id="avisos" class="avisos" hidden>
+      <button id="avisos-botao" type="button" class="avisos-botao" aria-expanded="false" aria-controls="avisos-corpo"></button>
+      <div id="avisos-corpo" class="avisos-corpo">
+        <p id="aviso-texto"></p>
+        <ul id="factos-lista"></ul>
+      </div>
+    </div>
+    <p class="etiqueta" data-t="etiqueta">Estudo volumétrico indicativo — sujeito a informação prévia da Câmara</p>
+    <p id="nota" class="nota" data-t="sem-cenarios" hidden>Os cenários não estão disponíveis; mostra-se só o estado atual.</p>
+    <div id="legenda" class="legenda" hidden></div>
+    <nav id="barra" class="barra" aria-label="Cenários" data-t-aria="aria-cenarios" hidden>
+      <div id="fases" class="fases" hidden>
+        <button id="reproduzir" type="button" class="ferramenta redonda reproduzir" aria-pressed="false" hidden><span class="icone" aria-hidden="true"></span></button>
+        <input id="fase" type="range" min="1" max="4" step="1" value="4" aria-label="Fase da obra" data-t-aria="aria-fase">
+        <span id="nome-fase"></span>
+      </div>
+      <div id="cenarios" class="cenarios"></div>
+    </nav>
+    <p class="creditos" data-t="creditos">Relevo e ortofotos: Direção-Geral do Território (LiDAR 2024, ortofotos 2025)</p>
+  </footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
