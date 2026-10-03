@@ -60,13 +60,16 @@ export function aplicarVisibilidade() {
   const { fase, camadas } = estado;
   const reabilitados = new Set();
   for (const r of cenario?.reabilita || []) if (r.fase <= fase) r.edificios.forEach((e) => reabilitados.add(e));
+  // o que o cenário tira de cena para pôr outra coisa no lugar (um projeto para uma ruína): sai o existente e não entra o reabilitado
+  const substituidos = new Set();
+  for (const r of cenario?.substitui || []) if (r.fase <= fase) r.edificios.forEach((e) => substituidos.add(e));
   const nomes = { cenario: new Set(), reabilitado: new Set(), existente: new Set(), mancha: new Set() };
   for (const p of pecas) {
     const c = p.info;
     let ver = false;
     if (c.raiz === 'cenario') ver = !!cenario && c.id === cenario.id && !cenario.recusa && (c.fase === null || c.fase <= fase);
-    else if (c.raiz === 'reabilitado') ver = reabilitados.has(c.id);
-    else if (c.raiz === 'existente') ver = !reabilitados.has(c.id);
+    else if (c.raiz === 'reabilitado') ver = reabilitados.has(c.id) && !substituidos.has(c.id);
+    else if (c.raiz === 'existente') ver = !reabilitados.has(c.id) && !substituidos.has(c.id);
     else if (c.raiz === 'mancha') ver = camadas.has(c.id);
     p.malha.visible = ver;
     if (ver) nomes[c.raiz].add(p.nome);

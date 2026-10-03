@@ -157,6 +157,10 @@ function preparar(cenario) {
     const novo = doEdificio('reabilitado'), velho = doEdificio('existente');
     ruinas.push({ fase: r.fase, novo: novo.length ? grupo(novo, r.fase) : null, velho: velho.length ? grupo(velho, r.fase) : null });
   }
+  for (const r of cenario.substitui || []) {  // o que sai de cena sem versão reabilitada: só o existente, a desaparecer
+    const velho = pecas.filter((p) => p.info.raiz === 'existente' && r.edificios.includes(p.info.id)).map((p) => p.malha);
+    if (velho.length) ruinas.push({ fase: r.fase, novo: null, velho: grupo(velho, r.fase) });
+  }
   const arvores = [];                    // {fase, inst, cache}
   for (const [fase, lista] of Object.entries(cenario.abate || {})) {
     for (const i of lista) if (instancias[i]) arvores.push({ fase: +fase, inst: instancias[i], chave: null, corOriginal: null });

@@ -140,7 +140,7 @@ function desenharInfo() {
   const secao = (titulo, ...filhos) => el('section', {}, el('h3', {}, titulo), ...filhos);
   const pisosTexto = (n) => (n === 1 ? t('pisos-1') : t('pisos-n', { n: num(n) }));
   const partes = [
-    secao(t('info-fontes'), el('ul', {}, ...(dados.apresentacao ? [1, 2, 3, 4, 5] : [1, 2, 3, 4]).map((n) => el('li', {}, t('info-fonte-' + n))))),
+    secao(t('info-fontes'), el('ul', {}, ...(dados.apresentacao ? [1, 2, 3, 4, 5, 6] : [1, 2, 3, 4, 6]).map((n) => el('li', {}, t('info-fonte-' + n))))),
   ];
   const pressupostosTexto = el('p', {}, pressupostos(dados.pressupostos));
   const original = estado.lingua === 'en' && dados.pressupostos?.fonte
@@ -151,7 +151,7 @@ function desenharInfo() {
       t('regime-linha', { pisos: pisosTexto(r.pisos), altura: metros(r.altura_m, Number.isInteger(r.altura_m) ? 0 : 1) }), ' · ',
       // O artigo fica como está nos dados (em português), também na página em inglês.
       el('span', { lang: 'pt', class: 'artigo' }, r.artigo))))));
-  partes.push(secao(t('info-confirmar'), el('ul', {}, ...[1, 2, 3, 4].map((n) => el('li', {}, t('confirmar-' + n))))));
+  partes.push(secao(t('info-confirmar'), el('ul', {}, ...[1, 2, 3, 4, 5].map((n) => el('li', {}, t('confirmar-' + n))))));
   corpoInfo.replaceChildren(...partes);
 }
 
@@ -165,7 +165,7 @@ const DURO = ' ';
 const colar = (texto) => texto.replace(/(\d) (?=\d|%|m²|ha\b)/g, '$1' + DURO);
 const daApresentacao = (par) => colar(daLingua(par));
 
-// Uma linha por cenário não recusado, com a construção nova e as unidades da fase 4; cada uma escolhe o cenário na fase 4.
+// Uma linha por cenário não recusado, com a área de construção e as unidades da fase 4; cada uma escolhe o cenário na fase 4.
 function tabelaDeCenarios(dados) {
   const linhas = dados.cenarios.filter((c) => !c.recusa && c.contas?.fases?.[3]).map((c) => {
     const f = c.contas.fases[3];
